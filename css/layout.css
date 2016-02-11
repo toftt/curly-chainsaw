@@ -2,6 +2,11 @@
     .hide-xs {
         display: none;
     }
+
+    .center-text-xs
+    {
+        text-align: center;
+    }
 }
 
 .jumbotron {

@@ -114,14 +114,14 @@
         </div>
     </div>
     <div class='col-sm-4'>
-    <div class='well well-sm m-t-10'><h2 class='no-margin'><?php echo $product_name; ?></h2></div>
+    <div class='well well-sm m-t-10 center-text-xs'><h2 class='no-margin'><?php echo $product_name; ?></h2></div>
         <div class='well'>
             <strong>Beskrivning: </strong><p><?php echo $product_description; ?></p>
             <p><strong>Färg: </strong><?php echo $product_color; ?></p>
             <p><strong>Material: </strong><?php echo $product_material; ?></p>
             <p><strong>Storlek: </strong><?php echo $product_size; ?></p>
         </div>
-        <div class='well well-sm'>
+        <div class='well well-sm center-text-xs'>
         <h2 class='no-margin'><?php echo $product_price; ?>,-</h2>
         </div>
 
