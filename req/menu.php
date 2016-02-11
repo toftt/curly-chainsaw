@@ -27,7 +27,7 @@
         </ul>
         <ul class='nav navbar-nav navbar-right'>
             <li><a href="#">Kontakt</a></li>
-            <li><a href="#">Hitta hit</a></li>
+            <li><a href="hitta">Hitta hit</a></li>
         </ul>
     </div>
 </nav>
