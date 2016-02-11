@@ -11,7 +11,7 @@
             <li class='dropdown'>
                 <a class='dropdown-toggle' data-toggle='dropdown' href='#'>Möbler <span class='caret'></span></a>
                 <ul class='dropdown-menu'>
-                    <li><a href="#">Loungegrupper</a></li>
+                    <li><a href="loungegrupper">Loungegrupper</a></li>
                     <li><a href="#">Matgrupper</a></li>
                     <li><a href="#">Balkongmöbler</a></li>
                 </ul>
@@ -27,7 +27,7 @@
         </ul>
         <ul class='nav navbar-nav navbar-right'>
             <li><a href="#">Kontakt</a></li>
-            <li><a href="hitta">Hitta hit</a></li>
+            <li><a href="hitta_hit">Hitta hit</a></li>
         </ul>
     </div>
 </nav>

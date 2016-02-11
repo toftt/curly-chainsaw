@@ -1,3 +1,5 @@
 RewriteEngine On
 
-RewriteRule ^hitta$ hitta.php
+RewriteRule ^hitta_hit$ hitta.php
+
+RewriteRule ^loungegrupper$ category\.php\?category_id=1

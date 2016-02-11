@@ -46,7 +46,7 @@
 
                     for ($i = 0; $i < 4; ++$i)
                     {
-                        $result->data_seek($j);
+                        $result->data_seek($k);
                         $row = $result->fetch_array(MYSQLI_ASSOC);
 
                         $tmp_product_id = $row['product_id'];
@@ -60,18 +60,16 @@
                             $image_src = $image_row['image_path'];
                         }
 
-                        echo "<div class='col-sm-3'>";
-                        echo "<div class='panel panel-default'>";
                         if ($k < $rows)
                         {
                             $tmp_name = $row['name'];
+                            echo "<div class='col-sm-3'>";
+                            echo "<div class='panel panel-default'>";
                             echo "<img class='img-responsive center-block img-thumbnail' src='$image_src'>";
-                            echo "<div class='panel-body'>$tmp_name</div></div>";
+                            echo "<div class='panel-body'><a href='product.php?product_id=$tmp_product_id'>$tmp_name</a></div></div>";
                         }
                         else
                             {
-                                echo "<img class='img-responsive center-block img-thumbnail'>";
-                                echo "<div class='panel-body'></div></div>";
                             }
 
                         echo "</div>";
