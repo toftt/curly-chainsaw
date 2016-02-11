@@ -1,5 +1,6 @@
 <?php
     require_once 'req/sql_details.php';
+    require_once 'req/create_head.php';
     $connection = new mysqli($db_hostname, $db_username, $db_password, $db_database);
     $product_name = $product_description = $product_color = $product_size = $product_material = $product_price = '';
     $image_sources = array();
@@ -44,16 +45,7 @@
 
 <!DOCTYPE html>
 <html lang='sv'>
-<head>
-    <title>Sommarmöbler Alnö</title>
-    <meta charset='UTF-8'>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
-    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
-    <link rel='stylesheet' type='text/css' href='css/layout.css'>
-
-</head>
+<?php create_head($product_name); ?>
 <body>
 <div class='container-fluid'>
 <div class='row'>
@@ -61,39 +53,7 @@
 </div>
 <div class='col-lg-6 col-md-8 col-sm-10'>
 
-    <nav class='navbar navbar-inverse'>
-        <div class='container-fluid'>
-            <button type='button' class='navbar-toggle' data-toggle='collapse' data-target='#myNavbar'>
-                <span class='icon-bar'></span>
-                <span class='icon-bar'></span>
-                <span class='icon-bar'></span>
-            </button>
-            </div>
-        <div class='collapse navbar-collapse' id='myNavbar'>
-            <ul class='nav navbar-nav'>
-                <li class='dropdown'>
-                    <a class='dropdown-toggle' data-toggle='dropdown' href='#'>Möbler <span class='caret'></span></a>
-                    <ul class='dropdown-menu'>
-                        <li><a href="#">Loungegrupper</a></li>
-                        <li><a href="#">Matgrupper</a></li>
-                        <li><a href="#">Balkongmöbler</a></li>
-                    </ul>
-                </li>
-                <li class='dropdown'>
-                    <a class='dropdown-toggle' data-toggle='dropdown' href='#'>Tillbehör <span class='caret'></span></a>
-                    <ul class='dropdown-menu'>
-                        <li><a href="#">Parasoll</a></li>
-                        <li><a href="#">Dynor</a></li>
-                    </ul>
-                </li>
-                <li><a href="#">Övrigt</a></li>
-            </ul>
-            <ul class='nav navbar-nav navbar-right'>
-                <li><a href="#">Kontakt</a></li>
-                <li><a href="#">Hitta hit</a></li>
-            </ul>
-        </div>
-    </nav>
+    <?php require_once 'req/menu.php'; ?>
     <div class='container-fluid'>
     <div class='row'>
     <div class='col-sm-8'>
