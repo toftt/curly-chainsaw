@@ -18,7 +18,7 @@
 <div class='col-lg-6 col-md-8'>
 
     <div class="alert alert-warning m-t-100">
-    <h3 class='no-margin'><strong>Sidan kunde inte hittas.</strong> Vänliga klicka <a href='#'>här</a> för att gå tillbaka till startsidan.</h3>
+    <h3 class='no-margin'><strong>Sidan kunde inte hittas.</strong> Vänligen klicka <a href='#'>här</a> för att gå tillbaka till startsidan.</h3>
     </div>
 
 </div>
