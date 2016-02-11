@@ -1,3 +1,47 @@
+<?php
+    require_once 'req/sql_details.php';
+    $connection = new mysqli($db_hostname, $db_username, $db_password, $db_database);
+    $product_name = $product_description = $product_color = $product_size = $product_material = $product_price = '';
+    $image_sources = array();
+    $number_of_images = 0;
+
+    if (isset($_GET['product_id']))
+    {
+        $product_id = clean_string($connection, $_GET['product_id']);
+        $query = "SELECT * FROM products WHERE product_id='$product_id'";
+        $result = $connection->query($query);
+
+        if (!$result) die($connection->error);
+        elseif ($result->num_rows)
+        {
+            $row = $result->fetch_array(MYSQLI_ASSOC);
+            $product_name = $row['name'];
+            $product_description = $row['description'];
+            $product_color = $row['color'];
+            $product_size = $row['size'];
+            $product_material = $row['material'];
+            $product_price = $row['price'];
+        }
+
+        else header('Location: fyranollfyra.php');
+
+        $query = "SELECT * FROM product_images WHERE product_id='$product_id'";
+        $result = $connection->query($query);
+        if (!$result) die($connection->error);
+        $rows = $result->num_rows;
+
+        for ($j = 0; $j < $rows ; ++$j)
+        {
+            $result->data_seek($j);
+            $row = $result->fetch_array(MYSQLI_ASSOC);
+
+            array_push($image_sources, $row['image_path']);
+        }
+        $number_of_images = count($image_sources);
+    }
+    else header('Location: fyranollfyra.php');
+?>
+
 <!DOCTYPE html>
 <html lang='sv'>
 <head>
@@ -57,26 +101,26 @@
         <div id="myCarousel2" class="carousel slide text-center" data-ride="carousel">
             <!-- Indicators -->
             <ol class="carousel-indicators">
-                <li data-target="#myCarousel2" data-slide-to="0" class="active"></li>
-                <li data-target="#myCarousel2" data-slide-to="1"></li>
-                <li data-target="#myCarousel2" data-slide-to="2"></li>
-                <li data-target="#myCarousel2" data-slide-to="3"></li>
+                <?php
+                    for ($index = 0; $index < $number_of_images; $index++)
+                    {
+                        if ($index == 0) echo "<li data-target='#myCarousel2' data-slide-to='0' class='active'></li>";
+                        else echo "<li data-target='#myCarousel2' data-slide-to='$index'></li>";
+                    }
+                ?>
             </ol>
 
             <!-- Wrapper for slides -->
             <div class="carousel-inner" role="listbox">
-            <div class="item active">
-                <img class='img-responsive center-block' src='one.jpg'>
-            </div>
-            <div class="item">
-                <img class='img-responsive center-block' src='two.jpg'>
-            </div>
-            <div class="item">
-                <img class='img-responsive center-block' src='three.jpg'>
-            </div>
-            <div class="item">
-                <img class='img-responsive center-block' src='four.jpg'>
-            </div>
+                <?php
+                for ($index = 0; $index < $number_of_images; $index++)
+                {
+                    if ($index == 0) echo "<div class='item active'>";
+                    else echo "<div class='item'>";
+                    echo "<img class='img-responsive center-block' src='$image_sources[$index]'>";
+                    echo "</div>";
+                }
+                ?>
             </div>
 
             <!-- Left and right controls -->
@@ -95,30 +139,30 @@
         <div class='container-fluid hide-xs'>
             <div class='row'>
                 <div class='col-xs-3 no-padding'>
-                <img class='img-responsive center-block img-thumbnail' src='one.jpg' data-target="#myCarousel2" data-slide-to="0">
+                <img class='img-responsive center-block img-thumbnail' src='images/one.jpg' data-target="#myCarousel2" data-slide-to="0">
                 </div>
                 <div class='col-xs-3 no-padding'>
-                <img class='img-responsive center-block img-thumbnail' src='two.jpg' data-target="#myCarousel2" data-slide-to="1">
+                <img class='img-responsive center-block img-thumbnail' src='images/two.jpg' data-target="#myCarousel2" data-slide-to="1">
                 </div>
                 <div class='col-xs-3 no-padding'>
-                <img class='img-responsive center-block img-thumbnail' src='three.jpg' data-target="#myCarousel2" data-slide-to="2">
+                <img class='img-responsive center-block img-thumbnail' src='images/three.jpg' data-target="#myCarousel2" data-slide-to="2">
                 </div>
                 <div class='col-xs-3 no-padding'>
-                <img class='img-responsive center-block img-thumbnail' src='four.jpg' data-target="#myCarousel2" data-slide-to="3">
+                <img class='img-responsive center-block img-thumbnail' src='images/four.jpg' data-target="#myCarousel2" data-slide-to="3">
                 </div>
             </div>
         </div>
     </div>
     <div class='col-sm-4'>
-    <div class='well well-sm m-t-10'><h2 class='no-margin'>Queen</h2></div>
+    <div class='well well-sm m-t-10'><h2 class='no-margin'><?php echo $product_name; ?></h2></div>
         <div class='well'>
-            <strong>Beskrivning: </strong><p>Queen är en loungegrupp i hög kvalitet som tycker väldigt mycket om att stå på olika altaner. Gjord i koppar är den vattenresistant till tusen, och älskar att umgås med andra sommarmöbler. Tycker du om tacos är denna möbel för dig, då den älskar att spansk mat.</p>
-            <p><strong>Färg: </strong>Grå, svart</p>
-            <p><strong>Material: </strong>Trä</p>
-            <p><strong>Storlek: </strong>14x366x200, 16x325x300</p>
+            <strong>Beskrivning: </strong><p><?php echo $product_description; ?></p>
+            <p><strong>Färg: </strong><?php echo $product_color; ?></p>
+            <p><strong>Material: </strong><?php echo $product_material; ?></p>
+            <p><strong>Storlek: </strong><?php echo $product_size; ?></p>
         </div>
         <div class='well well-sm'>
-        <h2 class='no-margin'>1795,-</h2>
+        <h2 class='no-margin'><?php echo $product_price; ?>,-</h2>
         </div>
 
     </div>
@@ -133,3 +177,5 @@
 </div>
 </body>
 </html>
+
+<?php $connection->close(); ?>
