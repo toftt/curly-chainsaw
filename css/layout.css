@@ -1,0 +1,33 @@
+@media screen and (max-width: 768px) {
+    .hide-xs {
+        display: none;
+    }
+}
+
+.jumbotron {
+    background-color: white;
+    color: #FFFFFF;
+    padding: 25px 25px;
+}
+
+.carousel-control.right, .carousel-control.left {
+    background-image: none;
+    color: white;
+    text-shadow: -2px 0 black, 0 2px black, 2px 0 black, 0 -2px black;
+}
+
+.img-thumbnail {
+    cursor: pointer;
+}
+
+.no-padding {
+    padding: 0;
+}
+
+.no-margin {
+    margin: 0;
+}
+
+.m-t-10 {
+    margin-top: 10px;
+}
