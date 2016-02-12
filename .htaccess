@@ -1,15 +1,17 @@
 RewriteEngine On
 
-RewriteRule ^hitta_hit$ hitta.php
+RewriteRule ^hitta_hit/$ hitta.php
 
-RewriteRule ^loungegrupper$ category\.php\?category_id=1
+RewriteRule ^loungegrupper/$ category\.php\?category_id=1
 
-RewriteRule ^matgrupper$ category\.php\?category_id=2
+RewriteRule ^matgrupper/$ category\.php\?category_id=2
 
-RewriteRule ^balkongmobler$ category\.php\?category_id=3
+RewriteRule ^balkongmobler/$ category\.php\?category_id=3
 
-RewriteRule ^parasoll$ category\.php\?category_id=4
+RewriteRule ^parasoll/$ category\.php\?category_id=4
 
-RewriteRule ^dynor$ category\.php\?category_id=5
+RewriteRule ^dynor/$ category\.php\?category_id=5
 
-RewriteRule ^ovrigt$ category\.php\?category_id=6
+RewriteRule ^ovrigt/$ category\.php\?category_id=6
+
+RewriteRule ^produkter/(\d*)$ product\.php\?product_id=$1

@@ -24,7 +24,7 @@
             $product_price = $row['price'];
         }
 
-        else header('Location: fyranollfyra.php');
+        else header('Location: /sommarmobler/fyranollfyra.php');
 
         $query = "SELECT * FROM product_images WHERE product_id='$product_id'";
         $result = $connection->query($query);
@@ -36,11 +36,11 @@
             $result->data_seek($j);
             $row = $result->fetch_array(MYSQLI_ASSOC);
 
-            array_push($image_sources, $row['image_path']);
+            array_push($image_sources, "/sommarmobler/" . $row['image_path']);
         }
         $number_of_images = count($image_sources);
     }
-    else header('Location: fyranollfyra.php');
+    else header('Location: /sommarmobler/fyranollfyra.php');
 ?>
 
 <!DOCTYPE html>
@@ -99,16 +99,16 @@
         <div class='container-fluid hide-xs'>
             <div class='row'>
                 <div class='col-xs-3 no-padding'>
-                <img class='img-responsive center-block img-thumbnail' src='images/one.jpg' data-target="#myCarousel2" data-slide-to="0">
+                <img class='img-responsive center-block img-thumbnail' src='/sommarmobler/images/one.jpg' data-target="#myCarousel2" data-slide-to="0">
                 </div>
                 <div class='col-xs-3 no-padding'>
-                <img class='img-responsive center-block img-thumbnail' src='images/two.jpg' data-target="#myCarousel2" data-slide-to="1">
+                <img class='img-responsive center-block img-thumbnail' src='/sommarmobler/images/two.jpg' data-target="#myCarousel2" data-slide-to="1">
                 </div>
                 <div class='col-xs-3 no-padding'>
-                <img class='img-responsive center-block img-thumbnail' src='images/three.jpg' data-target="#myCarousel2" data-slide-to="2">
+                <img class='img-responsive center-block img-thumbnail' src='/sommarmobler/images/three.jpg' data-target="#myCarousel2" data-slide-to="2">
                 </div>
                 <div class='col-xs-3 no-padding'>
-                <img class='img-responsive center-block img-thumbnail' src='images/four.jpg' data-target="#myCarousel2" data-slide-to="3">
+                <img class='img-responsive center-block img-thumbnail' src='/sommarmobler/images/four.jpg' data-target="#myCarousel2" data-slide-to="3">
                 </div>
             </div>
         </div>

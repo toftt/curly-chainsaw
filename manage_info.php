@@ -3,6 +3,7 @@
     require_once 'req/create_head.php';
     require_once 'req/check_login.php';
     $connection = new mysqli($db_hostname, $db_username, $db_password, $db_database);
+    $name_value = $material_value = $size_value = $color_value = $category_value = $description_value = $price_value = $product_id_input = '';
 
     if (isset($_POST['mode']))
     {
@@ -27,10 +28,68 @@
                     header ('Location: admin_panel.php');
                 }
         }
+
+        elseif ($_POST['mode'] == 'delete_product')
+        {
+            $tmp_product_id = clean_string($connection, $_POST['product_id']);
+            $query = "DELETE FROM products WHERE product_id='$tmp_product_id'";
+            $result = $connection->query($query);
+            if (!$result) die($connection->error);
+            else
+            {
+                header ('Location: admin_panel.php');
+            }
+        }
     }
 
-    
+    if ($_GET['mode'] == 'add')
+    {
+        $panel_type = 'primary';
+        $panel_text = 'Lägg till en produkt';
+        $form_mode = 'add_product';
+        $r_or_d = 'required';
+        $button = '<button type="submit" class="btn btn-primary">Lägg till</button>';
+    }
+    elseif ($_GET['mode'] == 'edit')
+    {
+        $panel_type='warning';
+        $panel_text = 'Ändra en produkt';
+        $form_mode = 'edit_product';
+        $r_or_d = 'required';
+        $button = '<button type="submit" class="btn btn-warning">Ändra</button>';
+    }
+    elseif ($_GET['mode'] == 'delete')
+    {
+        $panel_type='danger';
+        $panel_text = 'Ta bort en produkt';
+        $form_mode = 'delete_product';
+        $r_or_d = 'disabled';
+        $button = '<button type="submit" class="btn btn-danger">Ta bort</button>';
+    }
 
+
+    if ($_GET['mode'] == 'delete' || $_GET['mode'] == 'edit')
+    {
+        $product_id = $_GET['product_id'];
+        $query = "SELECT * FROM products WHERE product_id='$product_id'";
+        $result = $connection->query($query);
+        if (!$result) die($connection->error);
+
+        elseif($result->num_rows)
+        {
+            $row = $result->fetch_array(MYSQLI_ASSOC);
+
+            $name_value = $row['name'];
+            $material_value = $row['material'];
+            $size_value = $row['size'];
+            $color_value = $row['color'];
+            $category_value = $row['category_id'];
+            $description_value = $row['description'];
+            $price_value = $row['price'];
+        }
+
+        $product_id_input = "<input type='hidden' value='$product_id' name='product_id'>";
+    }
 
     $c_query = "SELECT * FROM categories ORDER BY name";
     $c_result = $connection->query($c_query);
@@ -50,31 +109,32 @@
 <!---->
 <?php require_once 'req/menu.php'; ?>
 
-<div class='container-fluid m-t-100'>
-    <div class="panel panel-primary">
-        <div class="panel-heading">Fyll i informationen nedan</div>
+<div class='container-fluid m-y-100'>
+    <div class="panel panel-<?php echo $panel_type; ?>">
+        <div class="panel-heading"><?php echo $panel_text; ?></div>
     </div>
     <form role="form" method="post" enctype="multipart/form-data">
-        <input type="hidden" value="add_product" name="mode">
+        <input type="hidden" value="<?php echo $form_mode; ?>" name="mode">
+        <?php echo $product_id_input; ?>
         <div class="form-group">
             <label>Namn:</label>
-            <input type="text" class="form-control" name="name" required>
+            <input type="text" class="form-control" name="name" <?php echo $r_or_d . " value='$name_value'"; ?>>
         </div>
         <div class="form-group">
             <label>Material:</label>
-            <input type="text" class="form-control" name="material" required>
+            <input type="text" class="form-control" name="material" <?php echo $r_or_d . " value='$material_value'"; ?>>
         </div>
         <div class="form-group">
             <label>Storlek:</label>
-            <input type="text" class="form-control" name="size" required>
+            <input type="text" class="form-control" name="size" <?php echo $r_or_d . " value='$size_value'"; ?>>
         </div>
         <div class="form-group">
             <label>Färg:</label>
-            <input type="text" class="form-control" name="color" required>
+            <input type="text" class="form-control" name="color" <?php echo $r_or_d . " value='$color_value'"; ?>>
         </div>
         <div class="form-group">
             <label>Kategori:</label>
-            <select class="form-control" name="category" required>
+            <select class="form-control" name="category" <?php echo $r_or_d; ?>>
                 <?php
                     for ($j = 0; $j < $c_rows ; ++$j)
                     {
@@ -82,24 +142,25 @@
                         $row = $c_result->fetch_array(MYSQLI_ASSOC);
                         $tmp_name = $row['name'];
                         $tmp_category_id = $row['category_id'];
-                        echo "<option value='$tmp_category_id'>$tmp_name</option>";
+                        if ($tmp_category_id == $category_value) echo "<option selected='selected' value='$tmp_category_id'>$tmp_name</option>";
+                        else echo "<option value='$tmp_category_id'>$tmp_name</option>";
                     }
                 ?>
             </select>
         </div>
         <div class="form-group">
             <label>Beskrivning:</label>
-            <textarea class="form-control" rows="5" name="description" required></textarea>
+            <textarea class="form-control" rows="5" name="description" <?php echo $r_or_d; ?>><?php echo $description_value; ?></textarea>
         </div>
         <div class="form-group">
             <label>Pris:</label>
-            <input type="text" class="form-control" name="price" required>
+            <input type="text" class="form-control" name="price" <?php echo $r_or_d . " value='$price_value'"; ?>>
         </div>
         <div class="form-group">
             <label>Bild:</label>
-            <input type="file" class="form-control" name="upload_image" id="upload_image" required>
+            <input type="file" class="form-control" name="upload_image" id="upload_image" <?php echo $r_or_d; ?>>
         </div>
-        <button type="submit" class="btn btn-primary">Lägg till</button>
+        <?php echo $button; ?>
     </form>
 </div>
 <!---->

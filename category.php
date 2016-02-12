@@ -68,7 +68,7 @@
                         if ($image_result->num_rows)
                         {
                             $image_row = $image_result->fetch_array(MYSQLI_ASSOC);
-                            $image_src = $image_row['image_path'];
+                            $image_src = '/sommarmobler/' . $image_row['image_path'];
                         }
 
                         if ($k < $rows)
@@ -77,7 +77,7 @@
                             echo "<div class='col-sm-3'>";
                             echo "<div class='panel panel-default'>";
                             echo "<img class='img-responsive center-block img-thumbnail' src='$image_src'>";
-                            echo "<div class='panel-body center-text-xs'><a href='product.php?product_id=$tmp_product_id'>$tmp_name</a></div></div>";
+                            echo "<div class='panel-body center-text-xs'><a href='/sommarmobler/produkter/$tmp_product_id'>$tmp_name</a></div></div>";
                         }
                         else
                             {
