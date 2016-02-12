@@ -3,6 +3,10 @@
     require_once 'req/create_head.php';
     require_once 'req/check_login.php';
     $connection = new mysqli($db_hostname, $db_username, $db_password, $db_database);
+    $query = "SELECT * FROM products ORDER BY name";
+    $result = $connection->query($query);
+    if (!$result) die($connection->error);
+    $rows = $result->num_rows;
 ?>
 
 <!DOCTYPE html>
@@ -19,17 +23,51 @@
 
     <div class='container-fluid'>
         <div class='row text-center'>
-            <div class='col-sm-3'>
-                <button type="button" class="btn btn-primary">Lägg till produkt</button>
+            <div class='col-sm-3 m-t-20'>
+                <a href="manage_info.php?mode=add" class="btn btn-primary btn-block">Lägg till produkt</a>
             </div>
-            <div class='col-sm-3'>
-                <button type="button" class="btn btn-warning">Ändra produktinformation</button>
+            <div class='col-sm-3 m-t-20'>
+                <button id="col2-btn" type="button" class="btn btn-warning btn-block" data-toggle="collapse" data-target="#col2">Ändra produkt</button>
+                <div id='col2' class='collapse text-left'>
+                    <div class='list-group'>
+                    <a href='#' class='list-group-item'>
+                    <input id='search_input2' class='border-none w-100 no-outline' type='text'>
+                    </a>
+                    <?php
+                        for ($j = 0; $j < $rows ; ++$j)
+                        {
+                            $result->data_seek($j);
+                            $row = $result->fetch_array(MYSQLI_ASSOC);
+                            $tmp_name = $row['name'];
+                            $tmp_product_id = $row['product_id'];
+                            echo "<a href='manage_info.php?product_id=$tmp_product_id&mode=edit' class='list-group-item'>$tmp_name</a>";
+                        }
+                    ?>
+                    </div>
+                </div>
             </div>
-            <div class='col-sm-3'>
-                <button type="button" class="btn btn-danger">Ta bort produkt</button>
+            <div class='col-sm-3 m-t-20'>
+                <button id="col3-btn" type="button" class="btn btn-danger btn-block" data-toggle="collapse" data-target="#col3">Ta bort produkt</button>
+                <div id='col3' class='collapse text-left'>
+                    <div class='list-group'>
+                    <a href='#' class='list-group-item'>
+                    <input id='search_input3' class='border-none w-100 no-outline' type='text'>
+                    </a>
+                    <?php
+                        for ($j = 0; $j < $rows ; ++$j)
+                        {
+                            $result->data_seek($j);
+                            $row = $result->fetch_array(MYSQLI_ASSOC);
+                            $tmp_name = $row['name'];
+                            $tmp_product_id = $row['product_id'];
+                            echo "<a href='manage_info.php?product_id=$tmp_product_id&mode=delete' class='list-group-item'>$tmp_name</a>";
+                        }
+                    ?>
+                    </div>
+                </div>
             </div>
-            <div class='col-sm-3'>
-                <button type="button" class="btn btn-info">Ändra öppettider</button>
+            <div class='col-sm-3 m-t-20'>
+                <a href="manage_info.php?mode=change_ot" class="btn btn-info btn-block">Ändra öppettider</a>
             </div>
         </div>
     </div>
@@ -40,6 +78,23 @@
 </div>
 </div>
 </div>
+
+<script>
+$(document).ready(function(){
+    $("#col2-btn").click(function(){
+        $("#col3").collapse('hide');
+    });
+    $("#col3-btn").click(function(){
+        $("#col2").collapse('hide');
+    });
+    $("#col2").on("shown.bs.collapse", function(){
+        $("#search_input2").focus();
+    });
+        $("#col3").on("shown.bs.collapse", function(){
+        $("#search_input3").focus();
+    });
+});
+</script>
 </body>
 </html>
 

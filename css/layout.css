@@ -33,8 +33,20 @@
     margin: 0;
 }
 
+.no-outline {
+    outline: none;
+}
+
+.border-none {
+    border: none;
+}
+
 .m-t-10 {
     margin-top: 10px;
+}
+
+.m-t-20 {
+    margin-top: 20px;
 }
 
 .m-t-100 {
@@ -43,4 +55,21 @@
 
 .m-b-100 {
     margin-bottom: 100px;
+}
+
+.m-y-10 {
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.p-a-0 {
+    padding: 0;
+}
+
+.w-100 {
+    width: 100%;
+}
+
+.h-40px {
+    height: 42px;
 }
