@@ -75,9 +75,9 @@
                         {
                             $tmp_name = $row['name'];
                             echo "<div class='col-sm-3'>";
-                            echo "<div class='panel panel-default'>";
+                            echo "<a class='area-link' href='/sommarmobler/produkter/$tmp_product_id'><div class='panel panel-default'>";
                             echo "<img class='img-responsive center-block img-thumbnail' src='$image_src'>";
-                            echo "<div class='panel-body center-text-xs'><a href='/sommarmobler/produkter/$tmp_product_id'>$tmp_name</a></div></div>";
+                            echo "<div class='panel-body center-text-xs'><strong>$tmp_name</strong></div></div></a>";
                         }
                         else
                             {

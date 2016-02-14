@@ -9,6 +9,18 @@
     }
 }
 
+* {
+    font-family: 'Roboto', sans-serif;
+}
+
+.area-link {
+    color: black;
+}
+
+.area-link:hover {
+    text-decoration: none;
+}
+
 .jumbotron {
     background-color: white;
     color: black;
@@ -78,3 +90,4 @@
 .h-40px {
     height: 42px;
 }
+
