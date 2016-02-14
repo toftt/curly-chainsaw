@@ -33,10 +33,6 @@
     text-shadow: -2px 0 black, 0 2px black, 2px 0 black, 0 -2px black;
 }
 
-.img-thumbnail {
-    cursor: pointer;
-}
-
 .no-padding {
     padding: 0;
 }

@@ -7,7 +7,7 @@
 
     if (isset($_POST['mode']))
     {
-        if ($_POST['mode'] == 'add_product')
+        if ($_POST['mode'] == 'add_product' || $_POST['mode'] == 'edit_product')
         {
             $tmp_name = clean_string($connection, $_POST['name']);
             $tmp_material = clean_string($connection, $_POST['material']);
@@ -17,9 +17,11 @@
             $tmp_description = clean_string($connection, $_POST['description']);
             $tmp_price = clean_string($connection, $_POST['price']);
 
+            if ($_POST['mode'] == 'add_product')
+            {
             $a_query = "INSERT INTO products(name, material, size, color, category_id, description, price)
                         VALUES ('$tmp_name', '$tmp_material', '$tmp_size', '$tmp_color', '$tmp_category',
-                        '$tmp_description', '$tmp_price')";
+                                '$tmp_description', '$tmp_price')";
             $a_result = $connection->query($a_query);
             if (!$a_result) die($connection->error);
             else
@@ -27,6 +29,21 @@
                     upload_image($connection, "upload_image", $connection->insert_id);
                     header ('Location: admin_panel.php');
                 }
+            }
+
+            elseif ($_POST['mode'] == 'edit_product')
+            {
+                $tmp_product_id = clean_string($connection, $_POST['product_id']);
+                $query = "UPDATE products SET name='$tmp_name', material='$tmp_material', size='$tmp_size', color='$tmp_color', category_id='$tmp_category',
+                         description='$tmp_description', price='$tmp_price' WHERE product_id='$tmp_product_id'";
+                $result = $connection->query($query);
+                if (!$result) die($connection->error);
+                else
+                {
+                    header('Location: admin_panel.php');
+                }
+
+            }
         }
 
         elseif ($_POST['mode'] == 'delete_product')
@@ -158,8 +175,45 @@
         </div>
         <div class="form-group">
             <label>Bild:</label>
-            <input type="file" class="form-control" name="upload_image" id="upload_image" <?php echo $r_or_d; ?>>
+            <input type="file" class="form-control" name="upload_image" id="upload_image">
         </div>
+
+        <?php
+            if (isset($_GET['product_id']))
+            {
+                $product_id = $_GET['product_id'];
+                $query = "SELECT * FROM product_images WHERE product_id='$product_id'";
+                $result = $connection->query($query);
+                if (!$result) die($connection->error);
+                $rows = $result->num_rows;
+                $number_of_rows = ceil($rows/4);
+                $index = 0;
+
+                for ($j = 0; $j < $number_of_rows; $j++)
+                {
+                    echo "<div class='row'>";
+
+                    for ($i = 0; $i < 4; ++$i)
+                    {
+                        echo "<div class='col-xs-3'>";
+                        if ($index < $rows)
+                        {
+                            $result->data_seek($index);
+                            $row = $result->fetch_array(MYSQLI_ASSOC);
+
+                            $image_src = '/sommarmobler/' . $row['image_path'];
+                            echo "<img class='img-responsive center-block img-thumbnail' src='$image_src'>";
+                        }
+                        $index++;
+                        echo "</div>";
+                    }
+                    echo "</div>";
+                }
+
+            }
+        ?>
+
+
         <?php echo $button; ?>
     </form>
 </div>
