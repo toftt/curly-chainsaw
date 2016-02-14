@@ -52,10 +52,12 @@
             $query = "DELETE FROM products WHERE product_id='$tmp_product_id'";
             $result = $connection->query($query);
             if (!$result) die($connection->error);
-            else
-            {
-                header ('Location: admin_panel.php');
-            }
+
+            $query = "DELETE FROM product_images WHERE product_id='$tmp_product_id'";
+            $result = $connection->query($query);
+            if (!$result) die($connection->error);
+
+            header ('Location: admin_panel.php');
         }
     }
 

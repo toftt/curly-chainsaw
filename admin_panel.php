@@ -93,7 +93,34 @@ $(document).ready(function(){
         $("#col3").on("shown.bs.collapse", function(){
         $("#search_input3").focus();
     });
+
+    $("#search_input2").keyup(function(){
+        listSearch(col2_items, $(this));
+    });
+
+    $("#search_input3").keyup(function(){
+        listSearch(col3_items, $(this));
+    });
+
+    var col2_items = $("#col2 > .list-group > a");
+    var col3_items = $("#col3 > .list-group > a");
 });
+
+function listSearch(items, input) {
+    var patt = new RegExp($(input).val(), "i");
+    $(items).each(function(index){
+        if (index == 0) return true;
+        if (patt.test($(this).text()))
+        {
+            $(this).show();
+        }
+        else
+        {
+            $(this).hide();
+        }
+    });
+}
+
 </script>
 </body>
 </html>

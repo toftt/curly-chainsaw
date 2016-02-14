@@ -97,20 +97,26 @@
 
 
         <div class='container-fluid hide-xs'>
-            <div class='row'>
-                <div class='col-xs-3 no-padding'>
-                <img class='img-responsive center-block img-thumbnail' src='/sommarmobler/images/one.jpg' data-target="#myCarousel2" data-slide-to="0">
-                </div>
-                <div class='col-xs-3 no-padding'>
-                <img class='img-responsive center-block img-thumbnail' src='/sommarmobler/images/two.jpg' data-target="#myCarousel2" data-slide-to="1">
-                </div>
-                <div class='col-xs-3 no-padding'>
-                <img class='img-responsive center-block img-thumbnail' src='/sommarmobler/images/three.jpg' data-target="#myCarousel2" data-slide-to="2">
-                </div>
-                <div class='col-xs-3 no-padding'>
-                <img class='img-responsive center-block img-thumbnail' src='/sommarmobler/images/four.jpg' data-target="#myCarousel2" data-slide-to="3">
-                </div>
-            </div>
+            <?php
+                $number_of_rows = ceil($number_of_images/4);
+                $index = 0;
+                for ($j = 0; $j < $number_of_rows; $j++)
+                {
+                    echo "<div class='row'>";
+                    for ($i = 0; $i < 4; $i++)
+                    {
+                        echo "<div class='col-xs-3 no-padding'>";
+                        if ($index < $number_of_images)
+                        {
+                            echo "<img class='img-responsive center-block img-thumbnail' src='$image_sources[$index]' data-target='#myCarousel2' data-slide-to='$index'>";
+                        }
+
+                        echo "</div>";
+                        $index++;
+                    }
+                    echo "</div>";
+                }
+            ?>
         </div>
     </div>
     <div class='col-sm-4'>
